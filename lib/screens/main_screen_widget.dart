@@ -52,6 +52,48 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     });
   }
 
+  bool isCol = false;
+  void changeCol(){
+    isCol = !isCol;
+  }
+
+  void _showDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Настройки'),
+        content: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CheckboxListTile(
+                  title: Text('Оценка "кол"'),
+                  value: isCol,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isCol = value ?? false; // Обновляем состояние чекбокса
+                    });
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Закрыть диалог
+            },
+            child: Text('Закрыть'),
+          ),
+        ],
+      );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +126,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                       color: isDarkTheme ? Colors.white : Colors.black,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
                   // Кнопки оценок
                   Row(
@@ -114,7 +156,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                       );
                     }),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -130,7 +172,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       SizedBox(
                         height: 50,
                         width: 170,
@@ -152,13 +194,26 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 42),
             child: Align(
-              
               alignment: Alignment.topRight, // Выравнивание по верхнему правому углу
               child: IconButton(
                 onPressed: changeTheme,
                 icon: Icon(
                   isDarkTheme ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
                   color: isDarkTheme ? Colors.yellow : Colors.black,
+                ),
+                iconSize: 32,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 42),
+            child: Align(
+              alignment: Alignment.topRight, // Выравнивание по верхнему правому углу
+              child: IconButton(
+                onPressed: () => _showDialog(context),
+                icon: Icon(
+                  Icons.settings,
+                  color: isDarkTheme ? Colors.white : Colors.black,
                 ),
                 iconSize: 32,
               ),
