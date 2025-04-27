@@ -1,0 +1,2 @@
+C:/Projects/marks_counter/android/app/.cxx/RelWithDebInfo/203m4l3v/x86/CMakeFiles/edit_cache.dir
+C:/Projects/marks_counter/android/app/.cxx/RelWithDebInfo/203m4l3v/x86/CMakeFiles/rebuild_cache.dir
