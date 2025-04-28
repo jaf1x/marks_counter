@@ -15,6 +15,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   List<int> marksForTeach = [2, 3, 4, 5];
   List<Color> borderColors = [
     Colors.red,
+    Colors.red,
     Colors.yellow,
     Colors.green,
     Colors.purpleAccent
@@ -54,8 +55,12 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
   bool isCol = false;
   void changeCol(){
+    setState(() {
     isCol = !isCol;
+    });
   }
+  // реализовать кол
+  // добавить хуйню типо "как всё работает?" и там бам всплывающее окно и написано всё
 
   void _showDialog(BuildContext context) {
   showDialog(
@@ -73,7 +78,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                   value: isCol,
                   onChanged: (bool? value) {
                     setState(() {
-                      isCol = value ?? false; // Обновляем состояние чекбокса
+                      isCol = value ?? false;
                     });
                   },
                 ),
@@ -84,18 +89,28 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Закрыть диалог
+              Navigator.of(context).pop();
             },
             child: Text('Закрыть'),
           ),
         ],
       );
       },
-    );
+    ).then((_){
+      setState(() {
+        
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    List<int> displayMarksForTeach = List.from(marksForTeach);
+    if(isCol){
+      displayMarksForTeach.insert(0,1);
+    }
+
     return Scaffold(
       backgroundColor: isDarkTheme ? backgroundColorDarkTheme : Colors.white,
       body: Stack(
@@ -131,14 +146,14 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                   // Кнопки оценок
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(marksForTeach.length, (index) {
+                    children: List.generate(displayMarksForTeach.length, (index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Container(
                           height: 52,
-                          width: 75,
+                          width: displayMarksForTeach.length == 5 ? 65 : 75 ,
                           child: ElevatedButton(
-                            onPressed: () => _addMark(marksForTeach[index]),
+                            onPressed: () => _addMark(displayMarksForTeach[index]),
                             style: ButtonStyle(
                               foregroundColor: WidgetStatePropertyAll(isDarkTheme ? Colors.white: Colors.black),
                               backgroundColor: WidgetStatePropertyAll(isDarkTheme ? backgroundColorDarkTheme: Colors.white),
@@ -148,7 +163,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                               )),
                             ),
                             child: Text(
-                              marksForTeach[index].toString(),
+                              displayMarksForTeach[index].toString(),
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
