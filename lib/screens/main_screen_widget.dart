@@ -148,7 +148,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(displayMarksForTeach.length, (index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
                         child: Container(
                           height: 52,
                           width: displayMarksForTeach.length == 5 ? 65 : 75 ,
